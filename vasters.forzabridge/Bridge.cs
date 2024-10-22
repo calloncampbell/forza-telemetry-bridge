@@ -209,6 +209,11 @@ namespace Vasters.ForzaBridge
                             channelData[ChannelType.Boost].Add(dash.Boost);
                             channelData[ChannelType.Fuel].Add(dash.Fuel);
                             channelData[ChannelType.DistanceTraveled].Add(dash.DistanceTraveled);
+                            channelData[ChannelType.BestLap].Add(dash.BestLap);
+                            channelData[ChannelType.LastLap].Add(dash.LastLap);
+                            channelData[ChannelType.CurrentLap].Add(dash.CurrentLap);
+                            channelData[ChannelType.CurrentRaceTime].Add(dash.CurrentRaceTime);
+                            channelData[ChannelType.LapNumber].Add(dash.LapNumber);
                             channelData[ChannelType.RacePosition].Add(dash.RacePosition);
                             channelData[ChannelType.Accel].Add(dash.Accel);
                             channelData[ChannelType.Brake].Add(dash.Brake);
@@ -392,6 +397,11 @@ namespace Vasters.ForzaBridge
             channelData.Add(ChannelType.Boost, new List<double>());
             channelData.Add(ChannelType.Fuel, new List<double>());
             channelData.Add(ChannelType.DistanceTraveled, new List<double>());
+            channelData.Add(ChannelType.BestLap, new List<double>());
+            channelData.Add(ChannelType.LastLap, new List<double>());
+            channelData.Add(ChannelType.CurrentLap, new List<double>());
+            channelData.Add(ChannelType.CurrentRaceTime, new List<double>());
+            channelData.Add(ChannelType.LapNumber, new List<double>());
             channelData.Add(ChannelType.RacePosition, new List<double>());
             channelData.Add(ChannelType.Accel, new List<double>());
             channelData.Add(ChannelType.Brake, new List<double>());
