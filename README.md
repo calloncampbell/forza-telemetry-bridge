@@ -4,8 +4,8 @@
 
 ## Overview
 
-ForzaBridge is a console application designed to capture and forward Forza
-Motorsport telemetry data (Windows | Xbox) to Microsoft Azure Event Hubs or Microsoft Fabric
+ForzaBridge is a console application designed to capture and forward [Forza
+Motorsport telemetry data](https://support.forzamotorsport.net/hc/en-us/articles/21742934024211-Forza-Motorsport-Data-Out-Documentation) (Windows | Xbox) to Microsoft Azure Event Hubs or Microsoft Fabric
 Event Streams. It utilizes UDP to listen for telemetry data sent from Forza
 Motorsport games and forwards this data after processing and formatting into
 cloud event streams.
