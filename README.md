@@ -5,7 +5,7 @@
 ## Overview
 
 ForzaBridge is a console application designed to capture and forward Forza
-Motorsport telemetry data to Microsoft Azure Event Hubs or Microsoft Fabric
+Motorsport telemetry data (Windows | Xbox) to Microsoft Azure Event Hubs or Microsoft Fabric
 Event Streams. It utilizes UDP to listen for telemetry data sent from Forza
 Motorsport games and forwards this data after processing and formatting into
 cloud event streams.
@@ -46,7 +46,7 @@ application will use the Azure CLI settings to authenticate.
 
 ### Optional Configuration
 
-- - `-i|--ip <ipAddress>`: IP address to bind the UDP listener. Defaults to
+- `-i|--ip <ipAddress>`: IP address to bind the UDP listener. Defaults to
   'any'.
 - `-p|--port <port>`: Port to bind the UDP listener. Defaults to `5300`.
 - `-x|--dataEncoding <encoding>`: Encoding of the data (Json, AvroBinary,
