@@ -73,7 +73,7 @@ To connect the Forza Motorsport game to ForzaBridge, configure the game to send
 telemetry data to the IP address and port where ForzaBridge is listening. This 
 is done in the "Gameplay & HUD" settings of the game under "UDP Race Telemetry".
 
-When the IP adfdress shows as '0.0.0.0' when you start the bridge, in Forza
+When the IP address shows as '0.0.0.0' when you start the bridge, in Forza
 Motorsport (2023), you can just configure the local address '127.0.0.1', in other
 Forza games, you may need to use the local network IP address of the machine
 running ForzaBridge.
@@ -100,7 +100,7 @@ encodings are available:
 - `AvroBinaryGZip`: Avro binary encoding with GZIP compression.
 - `AvroJsonGZip`: Avro JSON encoding with GZIP compression.
 
-Thje `Json` encoding is the default and recommended encoding for telemetry data.
+The `Json` encoding is the default and recommended encoding for telemetry data.
 It encodes the data in JSON format, whereby the data structures conform to the 
 Avro schema defined in the [xRegistry manifest](./xregistry/forza-telemetry.xreg.json).
 
