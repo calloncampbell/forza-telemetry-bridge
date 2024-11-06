@@ -35,6 +35,12 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
         [System.Text.Json.Serialization.JsonPropertyName("Timespan")]
         public global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.LapTimespan Timespan { get; set; }
         /// <summary>
+        /// The unique identifier of the track
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("TrackId")]
+        public string? TrackId { get; set; }
+
+        /// <summary>
         /// Default constructor
         ///</summary>
         public LapSignal()
@@ -65,7 +71,9 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
         "e session\", \"type\": [\"null\", \"string\"]}, {\"name\": \"Timespan\", \"type\": {\"name\": \""+
         "LapTimespan\", \"type\": \"record\", \"fields\": [{\"name\": \"StartTS\", \"type\": \"long\", \""+
         "logicalType\": \"timestamp-millis\"}, {\"name\": \"EndTS\", \"type\": \"long\", \"logicalTyp"+
-        "e\": \"timestamp-millis\"}], \"namespace\": \"ForzaMotorsport.Telemetry\"}}]}");
+        "e\": \"timestamp-millis\"},{\"name\": \"LapId\", \"doc\": \"The unique identifier of the lap\", \"type\""+
+        ": \"string\"}, {\"name\": \"TrackId\", \"doc\": \"The unique identifier of the track\", \"type\""+
+        ": \"string\"}], \"namespace\": \"ForzaMotorsport.Telemetry\"}}]}");
     
         global::Avro.Schema global::Avro.Specific.ISpecificRecord.Schema => AvroSchema;
     
@@ -77,6 +85,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
                 case 1: return this.CarId;
                 case 2: return this.SessionId;
                 case 3: return this.Timespan;
+                case 4: return this.TrackId;
                 default: throw new global::Avro.AvroRuntimeException($"Bad index {fieldPos} in Get()");
             }
         }
@@ -88,6 +97,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
                 case 1: this.CarId = (string?)fieldValue; break;
                 case 2: this.SessionId = (string?)fieldValue; break;
                 case 3: this.Timespan = fieldValue is global::Avro.Generic.GenericRecord?new global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.LapTimespan((global::Avro.Generic.GenericRecord)fieldValue):(global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.LapTimespan)fieldValue; break;
+                case 4: this.TrackId = (string?)fieldValue; break;
                 default: throw new global::Avro.AvroRuntimeException($"Bad index {fieldPos} in Put()");
             }
         }

@@ -5,10 +5,7 @@ using FluentAssertions;
 
 
 namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
-{
-
-
-    
+{    
     /// <summary> Test class for Channel </summary> 
     [TestFixture]
     public class ChannelTests
@@ -33,6 +30,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
             instance.Frequency = 42L;
             instance.Timespan = new global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.BatchTimespan();
             instance.Data = new List<double>();
+            instance.TrackId = "test_string";
             return instance;
         }
         /// <summary> Testing property ChannelId  </summary>
@@ -99,6 +97,14 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
             _instance.Data = testValue;
             _instance.Data.Should().AllBeEquivalentTo(testValue);
         }
+        /// <summary> Testing property SessionId  </summary>
+        [Test]
+        public void TestTrackIdProperty()
+        {
+            var testValue = "test_string";
+            _instance.TrackId = testValue;
+            _instance.TrackId.Should().Be(testValue);
+        }
         /// <summary> Testing Avro serializer </summary>
         [Test]
         public void Test_ToByteArray_FromData()
@@ -109,6 +115,4 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
             _instance.Should().BeEquivalentTo(newInstance);
         }
     }
-
-
 }

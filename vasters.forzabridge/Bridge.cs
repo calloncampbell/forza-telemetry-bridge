@@ -129,6 +129,8 @@ namespace Vasters.ForzaBridge
                 int lapId = 0;
                 int priorLapId = 0;
 
+                int trackId = 0;
+
                 Dictionary<ChannelType, List<double>> channelData = InitializeChannelData();
                 var sledDataSize = typeof(TelemetryDataSled).GetFields().Length * 4;
                 var lapEpoch = startTimeEpoch;
@@ -192,6 +194,7 @@ namespace Vasters.ForzaBridge
                         channelData[ChannelType.SuspensionTravelMetersFrontRight].Add(telemetryData.SuspensionTravelMetersFrontRight);
                         channelData[ChannelType.SuspensionTravelMetersRearLeft].Add(telemetryData.SuspensionTravelMetersRearLeft);
                         channelData[ChannelType.SuspensionTravelMetersRearRight].Add(telemetryData.SuspensionTravelMetersRearRight);
+                        
                         if (telemetryData is TelemetryDataDash)
                         {
                             var dash = (TelemetryDataDash)telemetryData;
@@ -228,16 +231,19 @@ namespace Vasters.ForzaBridge
                             channelData[ChannelType.TireWearRearLeft].Add(dash.TireWearRearLeft);
                             channelData[ChannelType.TireWearRearRight].Add(dash.TireWearRearRight);
 
+                            trackId = dash.TrackOrdinal;
                             lapId = dash.LapNumber;
+
                             if (priorLapId != lapId)
                             {
                                 priorLapId = lapId;
                                 Console.WriteLine($"lap: {lapId}");
                                 var startTS = lapEpoch;
                                 var endTS = normalizedTimestamp;
+                                var effectiveTrackId = trackId.ToString();
                                 var effectiveLapId = lapId.ToString();
-                                var effectiveCarId = (carId != null) ? carId : $"{telemetryData.CarOrdinal}:{telemetryData.CarClass}:{telemetryData.CarPerformanceIndex}";
-                                _ = Task.Run(async () => await SendLapSignal(telemetryProducer, startTS, endTS, tenantId, effectiveCarId, sessionId, effectiveLapId, eventEncodingContentType, formatter));
+                                var effectiveCarId = (carId != null) ? carId : $"{telemetryData.CarOrdinal}:{telemetryData.CarClass}:{telemetryData.CarPerformanceIndex}";                                
+                                _ = Task.Run(async () => await SendLapSignal(telemetryProducer, startTS, endTS, tenantId, effectiveTrackId, effectiveCarId, sessionId, effectiveLapId, eventEncodingContentType, formatter));
                                 lapEpoch = endTS;
                             }
                         }
@@ -249,10 +255,11 @@ namespace Vasters.ForzaBridge
                             Console.WriteLine($"lap: {lapId}, msec: {timestamp - lastSend}, recs: {capturedChannelData[ChannelType.AccelerationX].Count}");
                             var startTS = lastSend + startTimeEpoch;
                             var endTS = timestamp + startTimeEpoch;
+                            var effectiveTrackId = trackId.ToString();
                             var effectiveLapId = lapId.ToString();
                             var effectiveCarId = (carId != null) ? carId : $"{telemetryData.CarOrdinal}:{telemetryData.CarClass}:{telemetryData.CarPerformanceIndex}";
                             lastSend = timestamp;
-                            _ = Task.Run(async () => await SendChannelData(telemetryProducer, capturedChannelData, startTS, endTS, tenantId, effectiveCarId, sessionId, effectiveLapId, eventEncodingContentType, formatter));
+                            _ = Task.Run(async () => await SendChannelData(telemetryProducer, capturedChannelData, startTS, endTS, tenantId, effectiveTrackId, effectiveCarId, sessionId, effectiveLapId, eventEncodingContentType, formatter));
                         }
                     }
                     catch (Exception ex)
@@ -282,7 +289,7 @@ namespace Vasters.ForzaBridge
         }
 
         private static async Task SendLapSignal(TelemetryProducer producerClient, long lastSend, long timestamp, 
-                                                string tenantId, string carId, string sessionId, 
+                                                string tenantId, string trackId, string carId, string sessionId, 
                                                 string lapId, string contentType, CloudEventFormatter? formatter)
         {
             await producerClient.SendLapSignalAsync(
@@ -294,14 +301,15 @@ namespace Vasters.ForzaBridge
                     {
                         StartTS = lastSend,
                         EndTS = timestamp,
-                    }
+                    },
+                    TrackId = trackId
                 }, 
                 tenantId, carId, sessionId, contentType, formatter);
             Console.WriteLine($"Sent lap signal event for car {carId}, lap {lapId}");
         }
 
-        private static async Task SendChannelData(TelemetryProducer producerClient, Dictionary<ChannelType, List<double>> capturedChannelData, 
-                                                  long startTS, long endTS, string tenantId, string carId, string sessionId,
+        private static async Task SendChannelData(TelemetryProducer producerClient, Dictionary<ChannelType, List<double>> capturedChannelData,
+                                                  long startTS, long endTS, string tenantId, string trackId, string carId, string sessionId,
                                                   string lapId, string contentType, CloudEventFormatter? formatter)
         {
             int totalEventCount = 0;
@@ -329,7 +337,8 @@ namespace Vasters.ForzaBridge
                         StartTS = startTS,
                         EndTS = endTS
                     },
-                    Data = channelData.Value
+                    Data = channelData.Value,
+                    TrackId = trackId
                 });
             }
             foreach (var channel in channels)
@@ -415,6 +424,7 @@ namespace Vasters.ForzaBridge
             channelData.Add(ChannelType.TireWearFrontRight, new List<double>());
             channelData.Add(ChannelType.TireWearRearLeft, new List<double>());
             channelData.Add(ChannelType.TireWearRearRight, new List<double>());
+            channelData.Add(ChannelType.TrackOrdinal, new List<double>());
 
             return channelData;
         }

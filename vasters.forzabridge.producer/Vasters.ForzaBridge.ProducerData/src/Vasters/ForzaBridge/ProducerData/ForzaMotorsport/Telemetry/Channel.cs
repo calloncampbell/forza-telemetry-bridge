@@ -56,6 +56,12 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
         [System.Text.Json.Serialization.JsonPropertyName("Data")]
         public List<double> Data { get; set; }
         /// <summary>
+        /// The unique identifier of the track
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("TrackId")]
+        public string? TrackId { get; set; }
+
+        /// <summary>
         /// Default constructor
         ///</summary>
         public Channel()
@@ -112,7 +118,8 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
         "\", \"type\": \"record\", \"fields\": [{\"name\": \"StartTS\", \"type\": \"long\", \"logicalType"+
         "\": \"timestamp-millis\"}, {\"name\": \"EndTS\", \"type\": \"long\", \"logicalType\": \"timest"+
         "amp-millis\"}], \"namespace\": \"ForzaMotorsport.Telemetry\"}}, {\"name\": \"Data\", \"typ"+
-        "e\": {\"type\": \"array\", \"items\": \"double\"}}]}");
+        "e\": {\"type\": \"array\", \"items\": \"double\"}}, {\"name\": \"TrackId\", \"doc\": \"The"+
+        "unique identifier of the track\", \"type\": \"string\"}]}");
     
         global::Avro.Schema global::Avro.Specific.ISpecificRecord.Schema => AvroSchema;
     
@@ -128,6 +135,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
                 case 5: return this.Frequency;
                 case 6: return this.Timespan;
                 case 7: return this.Data;
+                case 8: return this.TrackId;
                 default: throw new global::Avro.AvroRuntimeException($"Bad index {fieldPos} in Get()");
             }
         }
@@ -143,6 +151,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
                 case 5: this.Frequency = (long)fieldValue; break;
                 case 6: this.Timespan = fieldValue is global::Avro.Generic.GenericRecord?new global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.BatchTimespan((global::Avro.Generic.GenericRecord)fieldValue):(global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.BatchTimespan)fieldValue; break;
                 case 7: this.Data = fieldValue is Object[]?((Object[])fieldValue).Select(x => (double)x).ToList():(List<double>)fieldValue; break;
+                case 8: this.TrackId = (string?)fieldValue; break;
                 default: throw new global::Avro.AvroRuntimeException($"Bad index {fieldPos} in Put()");
             }
         }
