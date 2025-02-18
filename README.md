@@ -32,6 +32,9 @@ available options:
 
 ### Required Configuration
 
+- `--driverId <driverId>`: Driver ID (email address).
+
+Then you need to provider either of the following for your connection to Azure Event Hub or Fabric Event Stream.
 - `-c|--connection <connectionString>`: Azure Event Hub or Fabric Event Stream
   connection string.
 
@@ -58,7 +61,6 @@ application will use the Azure CLI settings to authenticate.
 - `-r|--rate <dataRate>`: Data sending rate in Hz. Defaults to `1`.
 - `-t|--tenant <tenantId>`: Tenant ID. Defaults to `default`.
 - `-s|--session <sessionId>`: Session ID, defaults to a timestamp.
-- `--car <carId>`: Car ID, defaults automatically based on telemetry data.
 
 ## Usage
 

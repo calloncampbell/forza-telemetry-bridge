@@ -31,6 +31,7 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
             instance.Timespan = new global::Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry.BatchTimespan();
             instance.Data = new List<double>();
             instance.TrackId = "test_string";
+            instance.DriverId = "test_string";
             return instance;
         }
         /// <summary> Testing property ChannelId  </summary>
@@ -97,13 +98,21 @@ namespace Vasters.ForzaBridge.ProducerData.ForzaMotorsport.Telemetry
             _instance.Data = testValue;
             _instance.Data.Should().AllBeEquivalentTo(testValue);
         }
-        /// <summary> Testing property SessionId  </summary>
+        /// <summary> Testing property TrackId  </summary>
         [Test]
         public void TestTrackIdProperty()
         {
             var testValue = "test_string";
             _instance.TrackId = testValue;
             _instance.TrackId.Should().Be(testValue);
+        }
+        /// <summary> Testing property DriverId  </summary>
+        [Test]
+        public void TestDriverIdProperty()
+        {
+            var testValue = "test_string";
+            _instance.DriverId = testValue;
+            _instance.DriverId.Should().Be(testValue);
         }
         /// <summary> Testing Avro serializer </summary>
         [Test]
